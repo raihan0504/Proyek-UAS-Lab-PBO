@@ -5,6 +5,10 @@ import java.util.Scanner;
 public class ListBarang {
     private List<Barang> daftarBarang;
 
+    public ListBarang(){
+
+    }
+
     public ListBarang(List<Barang> daftarBarang) {
         this.daftarBarang = daftarBarang;
     }
