@@ -1,145 +1,108 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 public class ListBarang {
-    protected ArrayList<Barang> barang;
-    protected final String FILE_NAME = "Barang.txt";
+    private List<Barang> daftarBarang;
 
-    public ListBarang() {
-        barang = new ArrayList<>();
+    public ListBarang(List<Barang> daftarBarang) {
+        this.daftarBarang = daftarBarang;
     }
 
-    public void editBarang() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Masukkan kode barang yang ingin di edit: ");
-        String kode = scan.next();
-        System.out.print("Masukkan nama baru: ");
-        String nama = scan.next();
-        System.out.print("Masukkan harga baru: ");
-        int harga = scan.nextInt();
-
-        try {
-            File file = new File(FILE_NAME);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            List<String> barang = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] part = line.split(",");
-                if (part[0].equals(kode)) {
-                    line = kode + "," + nama + "," + harga;
-                }
-                barang.add(line);
-            }
-
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for (String l : barang) {
-                bufferedWriter.write(l);
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.close();
-            System.out.println("Barang berhasil diedit!");
-        } catch (IOException e) {
-            System.out.println("Terjadi kesalahan saat mengedit barang!");
-            e.printStackTrace();
-        }
+    public List<Barang> getDaftarBarang() {
+        return daftarBarang;
     }
 
-    public void hapusBarang() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Masukkan kode barang yang ingin dihapus: ");
-        String kode = scan.next();
-
-        try {
-            File file = new File(FILE_NAME);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            List<String> barang = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] part = line.split(",");
-                if (!part[0].equals(kode)) {
-                    barang.add(line);
-                }
-            }
-            reader.close();
-
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for (String l : barang) {
-                bufferedWriter.write(l);
-                bufferedWriter.newLine();
-            }
-            bufferedWriter.close();
-            System.out.println("Barang berhasil dihapus!");
-        } catch (IOException e) {
-            System.out.println("Terjadi kesalahan saat menghapus barang!");
-            e.printStackTrace();
-        }
-    }
-
-    public void tampilBarang() {
-        try {
-            File file = new File(FILE_NAME);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] part = line.split(",");
-                if (part.length >= 3) {
-                    System.out.println("Kode: " + part[0]);
-                    System.out.println("Nama: " + part[1]);
-                    System.out.println("Harga: " + part[2]);
-                    System.out.println(); // Menambahkan baris kosong sebagai pemisah
-                } else {
-                    System.out.println("Format tidak valid: " + line);
-                }
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            System.out.println("Terjadi kesalahan saat menampilkan barang!");
-            e.printStackTrace();
-        }
-    }
 
     public void tambahBarang() {
         Scanner scan = new Scanner(System.in);
+
         System.out.print("Masukkan kode barang: ");
         String kode = scan.nextLine();
         System.out.print("Masukkan nama barang: ");
         String nama = scan.nextLine();
         System.out.print("Masukkan harga barang: ");
         int harga = scan.nextInt();
+        System.out.print("Masukkan stok barang: ");
+        int stok = scan.nextInt();
+        // Buat objek Barang baru
+        Barang barangBaru = new Barang(kode, nama, harga, stok);
+        // Tambahkan objek Barang baru ke dalam daftarBarang
+        daftarBarang.add(barangBaru);
 
-        try {
-            File file = new File(FILE_NAME);
-
-            FileWriter tulisFile = new FileWriter(file, true);
-            BufferedWriter bufferWriter = new BufferedWriter(tulisFile);
-            bufferWriter.write(kode + "," + nama + "," + harga);
-            bufferWriter.newLine();
-            bufferWriter.close();
-            System.out.println("Barang berhasi ditambahkan!");
-        } catch (IOException e) {
-            System.out.println("Terjadi kesalahan saat menambahkan barang!");
-            e.printStackTrace();
-        }
+        System.out.println("Barang berhasil ditambahkan!");
     }
+    // Metode untuk menyimpan perubahan ke dalam file
+    public void simpanKeFile(String namaFile) {
+        Barang.simpanKeFile(daftarBarang, namaFile);
+        System.out.println("Daftar barang berhasil disimpan ke file: " + namaFile);
+    }
+
+    public void hapusBarang() {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Masukkan kode barang yang akan dihapus: ");
+        String kode = scan.nextLine();
+
+        Iterator<Barang> iterator = daftarBarang.iterator();
+        while (iterator.hasNext()) {
+            Barang barang = iterator.next();
+            if (barang.getKodeBarang().equals(kode)) {
+                iterator.remove();
+                System.out.println("Barang berhasil dihapus!");
+                return;
+            }
+        }
+
+        System.out.println("Barang dengan kode " + kode + " tidak ditemukan.");
+    }
+
+    public void editBarang() {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Masukkan kode barang yang akan diedit: ");
+        String kode = scan.nextLine();
+
+        Iterator<Barang> iterator = daftarBarang.iterator();
+        while (iterator.hasNext()) {
+            Barang barang = iterator.next();
+            if (barang.getKodeBarang().equals(kode)) {
+                System.out.println("Data barang yang akan diubah:");
+                System.out.println("Nama Barang: " + barang.getNamaBarang());
+                System.out.println("Harga Barang: " + barang.getHargaBarang());
+                System.out.println("Stok Barang: " + barang.getStokBarang());
+
+                System.out.print("Masukkan nama barang baru: ");
+                String namaBaru = scan.nextLine();
+                System.out.print("Masukkan harga barang baru: ");
+                int hargaBaru = scan.nextInt();
+                System.out.print("Masukkan stok barang baru: ");
+                int stokBaru = scan.nextInt();
+
+                // Update data barang
+                barang.setNamaBarang(namaBaru);
+                barang.setHargaBarang(hargaBaru);
+                barang.setStokBarang(stokBaru);
+
+                System.out.println("Barang berhasil diubah!");
+                return;
+            }
+        }
+
+        System.out.println("Barang dengan kode " + kode + " tidak ditemukan.");
+    }
+
+    public void tampilBarang() {
+        if (daftarBarang.isEmpty()) {
+            System.out.println("Daftar Barang kosong.");
+        } else {
+            System.out.println("Daftar Barang:");
+            for (Barang barang : daftarBarang) {
+                System.out.println("Kode: " + barang.getKodeBarang() +
+                        ", Nama: " + barang.getNamaBarang() +
+                        ", Harga: " + barang.getHargaBarang() +
+                        ", Stok: " + barang.getStokBarang());
+            }
+        }
+    }    
 }
