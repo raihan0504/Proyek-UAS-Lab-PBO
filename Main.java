@@ -1,42 +1,45 @@
-
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
-        ListBarang listBarang = new ListBarang();
+public class Main{
+    private Akun akun;
+    private Driver driverAkun;
+
+    public void Login(){
         Scanner scan = new Scanner(System.in);
-        String input;
+        Admin admin = new Admin();
+        Customer customer = new Customer();
+        int input;
 
         do {
-            System.out.println("\n1. Tambah Barang");
-            System.out.println("2. Tampilkan Barang");
-            System.out.println("3. Edit Barang");
-            System.out.println("4. Hapus Barang");
-            System.out.println("5. Exit");
+            System.out.println("\n1. Login");
+            System.out.println("2. Exit");
             System.out.print("Masukkan pilihan: ");
-            input = scan.next();
+            input = scan.nextInt();
 
             switch (input) {
-                case "1":
-                    listBarang.tambahBarang();
-                    break;
-                case "2":
-                    listBarang.tampilBarang();
-                    break;
-                case "3":
-                    listBarang.editBarang();
-                    break;
-                case "4":
-                    listBarang.hapusBarang();
-                    break;
-                case "5":
-                    System.out.println("Program akan berhenti.");
-                    break;
-                default:
-                    System.out.println("Input tidak valid.");
-            }
-        } while (!input.equals("5"));
+                case 1:
+                    System.out.println("Masukkan ID: ");
+                    String id = scan.next();
+                    System.out.println("Masukkan Password: ");
+                    String password = scan.next();
 
-        scan.close();
+                    if (id.equals(admin.getId()) && password.equals(admin.getPassword())){
+                        
+                    }
+                    else if(id.equals(customer.getId()) && password.equals(customer.getPassword())){
+
+                    }
+                    
+                    break;
+                case 2:
+                System.out.println("Terima kasih telah menggunakan program kami");
+                break;
+                default:
+                    break;
+            }
+        }while(input>0 && input < 2);
+    }
+    public static void main(String[] args){
+        
     }
 }
