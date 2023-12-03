@@ -1,5 +1,16 @@
 import java.util.Scanner;
 
+/**
+ * Kelas utama Main digunakan untuk menjalankan program e-commerce sederhana.
+ * Program ini mendukung dua peran pengguna: pelanggan (customer) dan admin.
+ * Pengguna dapat login sebagai customer atau admin untuk mengakses menu yang sesuai.
+ * Setelah login, program akan menampilkan menu yang relevan dengan peran pengguna.
+ * Program ini menggunakan objek CustomerDriver dan AdminDriver untuk mengelola interaksi dengan pelanggan dan admin.
+ * Juga, AuthManager digunakan untuk mengelola login admin.
+ *
+ * @author Raihan, Della, Azron
+ * @version 1.0
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -40,11 +51,11 @@ public class Main {
         
     }
 
-    private static void customerMenu(CustomerDriver customerDriver) {
+    private static void customerMenu(CustomerDriver customerDriver) { //@param customerDriver Objek CustomerDriver yang akan digunakan.
         customerDriver.Menu();
     }
 
-    private static void adminMenu(AdminDriver adminDriver) {
+    private static void adminMenu(AdminDriver adminDriver) { //@param adminDriver Objek AdminDriver yang akan digunakan.
         adminDriver.Menu();
     }
 }
