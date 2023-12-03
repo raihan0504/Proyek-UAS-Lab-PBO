@@ -19,6 +19,10 @@ public class Barang {
         this.stokBarang = stokBarang;
     }
 
+    // Tambahkan konstruktor kosong jika diperlukan
+    public Barang() {
+    }
+
     public String getKodeBarang() {
         return kodeBarang;
     }
@@ -42,11 +46,17 @@ public class Barang {
     public void setKodeBarang(String kodeBarang) {
         this.kodeBarang = kodeBarang;
     }
+
     public void setNamaBarang(String namaBarang) {
         this.namaBarang = namaBarang;
     }
+
     public void setStokBarang(int stokBarang) {
         this.stokBarang = stokBarang;
+    }
+
+    public void kurangiStok(int jumlah) {
+        stokBarang -= jumlah;
     }
 
     public static List<Barang> bacaDariFile(String namaFile) {
@@ -59,15 +69,27 @@ public class Barang {
                 if (parts.length == 4) {
                     String kodeBarang = parts[0].trim();
                     String namaBarang = parts[1].trim();
-                    int hargaBarang = Integer.parseInt(parts[2].trim());
-                    int stokBarang = Integer.parseInt(parts[3].trim());
+
+                    // Validasi harga dan stok
+                    int hargaBarang;
+                    int stokBarang;
+                    try {
+                        hargaBarang = Integer.parseInt(parts[2].trim());
+                        stokBarang = Integer.parseInt(parts[3].trim());
+                    } catch (NumberFormatException e) {
+                        System.err.println("Format angka tidak valid pada file: " + namaFile);
+                        continue;
+                    }
 
                     Barang barang = new Barang(kodeBarang, namaBarang, hargaBarang, stokBarang);
                     daftarBarang.add(barang);
+                } else {
+                    System.err.println("Format tidak valid pada file: " + namaFile);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
-            e.printStackTrace();  // Ganti dengan penanganan kesalahan yang sesuai
+        } catch (IOException e) {
+            System.err.println("Kesalahan saat membaca file: " + namaFile);
+            e.printStackTrace();
         }
 
         return daftarBarang;
@@ -76,8 +98,9 @@ public class Barang {
     public static void simpanKeFile(List<Barang> daftarBarang, String namaFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaFile))) {
             for (Barang barang : daftarBarang) {
-                // Format: Kode,Nama,Harga,Stok
-                String line = String.format("%s,%s,%d,%d",
+                // Menggunakan text block untuk memudahkan pembacaan
+                String line = String.format(
+                        "%s,%s,%d,%d",
                         barang.getKodeBarang(),
                         barang.getNamaBarang(),
                         barang.getHargaBarang(),
@@ -87,7 +110,8 @@ public class Barang {
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();  // Ganti dengan penanganan kesalahan yang sesuai
+            System.err.println("Kesalahan saat menulis ke file: " + namaFile);
+            e.printStackTrace();
         }
     }
 }
