@@ -8,12 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Kelas Transaksi digunakan untuk mengelola transaksi pembelian barang oleh pelanggan.
+ * Setiap transaksi mencakup daftar barang yang dibeli, total harga, dan metode pembayaran yang digunakan.
+ * Transaksi dapat di-checkout dan kemudian disetujui oleh admin.
+ * Detail transaksi yang menunggu persetujuan disimpan dalam file "transactions_pending_approval.txt".
+ * Setelah disetujui, detail transaksi dipindahkan ke dalam file "transactions_history.txt".
+ * /
 public class Transaksi {
     private Customer akun;
     private List<Barang> barang;
     private List<Transaksi> historyTransaksi;
     private boolean approved;
 
+    /**
+     * Konstruktor untuk membuat objek Transaksi.
+     * 
+     * @param akun Objek Customer yang terkait dengan transaksi.
+     * @param arrayList List barang yang akan dibeli.
+     */
     public Transaksi(Customer akun, ArrayList arrayList) {
         this.akun = akun;
         this.barang = new ArrayList<>();
@@ -21,6 +34,11 @@ public class Transaksi {
         this.approved =false;
     }
 
+    /**
+     * Metode untuk menambahkan barang ke dalam keranjang belanja.
+     * 
+     * @param listBarang Objek ListBarang yang berisi daftar barang yang tersedia.
+     */
     public void tambahBarang(ListBarang listBarang) {
         Scanner scan = new Scanner(System.in);
 
@@ -36,7 +54,7 @@ public class Transaksi {
             int jumlah = scan.nextInt();
 
             if (jumlah > 0 && jumlah <= barangDitambahkan.getStokBarang()) {
-                // Add the specified quantity to the cart
+                // Tambahkan barang dengan jumlah yang diinginkan ke dalam keranjang
                 Barang barangKeranjang = new Barang(
                         barangDitambahkan.getKodeBarang(),
                         barangDitambahkan.getNamaBarang(),
@@ -44,7 +62,7 @@ public class Transaksi {
                         jumlah
                 );
                 barang.add(barangKeranjang);
-                barangDitambahkan.kurangiStok(jumlah); // Decrease stock based on the chosen quantity
+                barangDitambahkan.kurangiStok(jumlah); //Kurangi stok berdasarkan jumlah yang dipilih
                 System.out.println("Barang berhasil ditambahkan ke keranjang!");
             } else {
                 System.out.println("Jumlah barang tidak valid atau stok tidak mencukupi.");
@@ -53,7 +71,10 @@ public class Transaksi {
             System.out.println("Barang dengan kode tersebut tidak ditemukan");
         }
     }
-    
+
+    /**
+     * Metode untuk persetujuan transaksi oleh admin.
+     */
     public void AdminApprove() {
         if (AuthManager.isAdminLoggedIn()) {
             System.out.println("Transaksi disetujui oleh admin");
@@ -64,11 +85,19 @@ public class Transaksi {
         }
     }
 
+    /**
+     * Metode untuk logout dari akun admin.
+     */
     public void adminLogout() {
         AuthManager.logoutAdmin();
         System.out.println("Anda telah logout dari akun admin.");
     }
 
+    /**
+     * Metode untuk melakukan checkout dan pembayaran.
+     * 
+     * @param listBarang Objek ListBarang yang berisi daftar barang yang tersedia.
+     */
     public void checkout(ListBarang listBarang) {
         if (barang.isEmpty()) {
             System.out.println("Keranjang belanja kosong");
@@ -116,15 +145,18 @@ public class Transaksi {
              simpanDetailTransaksi();
 
              System.out.println("Menunggu persetujuan admin...");
-             approved = false;  // Reset approval status
+             approved = false;  // Reset status persetujuan
            
         }
         
         kurangiStokBarang(listBarang);
     }
 
-    
-
+    /**
+     * Metode untuk mengurangi stok barang di ListBarang berdasarkan barang yang dibeli.
+     * 
+     * @param listBarang Objek ListBarang yang berisi daftar barang yang tersedia.
+     */
     private void kurangiStokBarang(ListBarang listBarang) {
         for (Barang barangKeranjang : barang) {
             Barang barangListBarang = listBarang.cariBarang(barangKeranjang.getKodeBarang());
@@ -133,12 +165,17 @@ public class Transaksi {
                 // // Mengurangi stok barang di ListBarang
                 // barangListBarang.kurangiStok(barangKeranjang.getStokBarang());
                 
-                // Update the stock in the file
+                // Update stok barang di ListBarang
                 updateStockInFile(barangListBarang);
             }
         }
     }
-    
+
+    /**
+     * Metode untuk mengupdate stok barang di file "Barang.txt" setelah pembelian.
+     * 
+     * @param updatedBarang Barang yang telah diupdate (stok dikurangi).
+     */
     private void updateStockInFile(Barang updatedBarang) {
         String fileName = "Barang.txt";
         List<String> lines = new ArrayList<>();
@@ -147,14 +184,14 @@ public class Transaksi {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith(updatedBarang.getKodeBarang())) {
-                    // Update the stock in the current line
+                    // Update stok pada baris saat ini
                     String[] parts = line.split(",");
                     int currentStock = Integer.parseInt(parts[3]); 
                     int updatedStock = currentStock - updatedBarang.getStokBarang();
                     parts[3] = String.valueOf(updatedStock);
                     line = String.join(",", parts);
                 }
-                lines.add(line);  // Add the line (modified or not) to the list
+                lines.add(line);  // Tambahkan baris (dimodifikasi atau tidak) ke dalam list
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -169,9 +206,10 @@ public class Transaksi {
             e.printStackTrace();
         }
     }
-    
-    
 
+    /**
+     * Metode untuk menyimpan detail transaksi yang menunggu persetujuan ke dalam file.
+     */
     private void simpanDetailTransaksi() {
         String fileName = "transactions_pending_approval.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
@@ -194,7 +232,11 @@ public class Transaksi {
         }
     }
     
-
+    /**
+     * Metode untuk menghitung total harga dari barang yang dibeli.
+     * 
+     * @return Total harga dari transaksi.
+     */
     private int hitungTotalHarga() {
         int totalHarga = 0;
         for (Barang b : barang) {
@@ -203,34 +245,51 @@ public class Transaksi {
         return totalHarga;
     }
    
-
+    /**
+     * Metode untuk pembayaran menggunakan objek Bank.
+     * 
+     * @param bank Objek Bank yang digunakan untuk pembayaran.
+     */
     private void bayar(Bank bank) {
     }
 
+    /**
+     * Metode untuk pembayaran menggunakan objek Qris.
+     * 
+     * @param qris Objek Qris yang digunakan untuk pembayaran.
+     */
     private void bayar(Qris qris) {
     }
 
+     /**
+     * Metode untuk melakukan pembayaran menggunakan objek MetodeBayar.
+     * 
+     * @param metodePembayaran Objek MetodeBayar yang digunakan untuk pembayaran.
+     */
     private void bayar(MetodeBayar metodePembayaran) {
         metodePembayaran.bayar();
     }
 
+     /**
+     * Metode untuk menampilkan detail transaksi dari file history transaksi.
+     */
     public void tampilHistoryTransaksiFromFile() {
-        String fileName = "transactions_history.txt";  // Change the file name as per your actual file
+        String fileName = "transactions_history.txt"; 
     
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("TransactionID:")) {
-                    // Assuming the file format includes TransactionID and Total Harga
+                    // Mengasumsikan format file mencakup TransactionID dan Total Harga
                     String transactionID = line.split(":")[1].trim();
                     String totalHargaLine = reader.readLine();
                     int totalHarga = Integer.parseInt(totalHargaLine.split(":")[1].trim());
     
-                    // Print transaction details
+                    // Menampilkan detail transaksi
                     System.out.println("TransactionID: " + transactionID);
                     System.out.println("Total Harga: " + totalHarga);
     
-                    // Print other details or update your logic accordingly based on your file format
+                    // Menampilkan detail lainnya atau memperbarui logika Anda sesuai dengan format file Anda
                 }
             }
         } catch (IOException e) {
@@ -238,21 +297,36 @@ public class Transaksi {
         }
     }
 
+    /**
+     * Metode untuk mendapatkan daftar barang dalam transaksi.
+     * 
+     * @return List barang dalam transaksi.
+     */
     public List<Barang> getBarang() {
         return barang;
     }
 
-    // Add a method to get the date of the transaction
+    /**
+     * Mendapatkan tanggal transaksi.
+     *
+     * @return Tanggal transaksi dalam format DD-MM-YYYY.
+     */
     private String getDate() {
-        // Implement this method to get the date of the transaction
-        return "DD-MM-YYYY";  // Replace with the actual date
+        return "DD-MM-YYYY";
     }
 
+    /**
+     * Mengecek apakah transaksi disetujui.
+     *
+     * @return True jika transaksi disetujui, false jika tidak.
+     */
     public boolean isApproved(){
         return approved;
     }
 
-
+    /**
+     * Menyimpan status persetujuan transaksi.
+     */
     private void saveApprovalStatus() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("approval_status.txt", true))) {
             // Format: TransactionID,Approved
@@ -263,6 +337,11 @@ public class Transaksi {
         }
     }
 
+     /**
+     * Memuat status persetujuan dari file.
+     *
+     * @return List status persetujuan transaksi.
+     */
     public static List<String> loadApprovalStatus() {
         List<String> approvalStatusList = new ArrayList<>();
     
@@ -278,7 +357,11 @@ public class Transaksi {
         return approvalStatusList;
     }
     
-
+    /**
+     * Menghasilkan ID transaksi unik berdasarkan timestamp saat ini.
+     *
+     * @return ID transaksi yang dihasilkan.
+     */
     private String getTransactionID() {
         // Implementasi ini akan tergantung pada cara Anda ingin menghasilkan ID transaksi.
         // Sebagai contoh, kita bisa menggunakan timestamp.
@@ -286,6 +369,11 @@ public class Transaksi {
         return "TRX" + timestamp;
     }
 
+    /**
+     * Mendapatkan detail transaksi dalam bentuk string terformat.
+     *
+     * @return Detail transaksi.
+     */
     private String getTransactionDetails() {
         // Mendapatkan detail transaksi dalam format yang diinginkan
         // Implementasikan sesuai kebutuhan proyek Anda
@@ -300,6 +388,9 @@ public class Transaksi {
         return detailsBuilder.toString();
     }
 
+     /**
+     * Menyimpan detail transaksi ke dalam file persetujuan tertunda.
+     */
     private void saveTransactionDetails() {
         // Simpan detail transaksi ke dalam file
         String fileName = "transactions_pending_approval.txt";
