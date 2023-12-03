@@ -2,22 +2,38 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Kelas Keranjang mengelola operasi yang terkait dengan keranjang belanja,
+ * seperti menampilkan barang, menambahkan dan menghapus barang dari keranjang.
+ * Data keranjang disimpan dalam file "Keranjang.txt" dan data barang dalam file "Barang.txt".
+ * Kelas ini memiliki fungsionalitas untuk membersihkan keranjang belanja.
+ */
 public class Keranjang {
     private ArrayList<Barang> listKeranjang;
     private ArrayList<Barang> listBarang;
     private Scanner scanner;
 
+    /**
+     * Konstruktor untuk membuat instansi Keranjang.
+     * Inisialisasi ArrayList untuk keranjang dan barang, serta Scanner untuk input.
+     */
     public Keranjang() {
         this.listKeranjang = new ArrayList<Barang>();
         this.listBarang = new ArrayList<Barang>();
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Mengosongkan keranjang belanja dengan menghapus semua barang dari ArrayList.
+     */
     public void clearKeranjang() {
         this.listKeranjang.clear();
     }
-    
 
+    /**
+     * Membaca data keranjang dari file "Keranjang.txt".
+     * Setiap baris dalam file mewakili satu barang dalam keranjang.
+     */
     private void bacaDataKeranjang() {
         String pathDataKeranjang = "Keranjang.txt";
         try (BufferedReader keranjang = new BufferedReader(new FileReader(pathDataKeranjang))) {
@@ -32,6 +48,10 @@ public class Keranjang {
         }
     }
 
+    /**
+     * Menulis data keranjang ke file "Keranjang.txt".
+     * Setiap baris dalam file mewakili satu barang dalam keranjang.
+     */
     private void tulisDataKeranjang() {
         String pathDataKeranjang = "Keranjang.txt";
         try (BufferedWriter keranjang = new BufferedWriter(new FileWriter(pathDataKeranjang))) {
@@ -47,6 +67,10 @@ public class Keranjang {
         }
     }
 
+    /**
+     * Membaca data barang dari file "Barang.txt".
+     * Setiap baris dalam file mewakili satu barang yang dapat ditambahkan ke keranjang.
+     */
     private void bacaDataBarang() {
         String pathDataBarang = "Barang.txt";
         try (BufferedReader databaseBarang = new BufferedReader(new FileReader(pathDataBarang))) {
@@ -61,6 +85,10 @@ public class Keranjang {
         }
     }
 
+    /**
+     * Menampilkan daftar barang yang tersedia untuk dibeli.
+     * Daftar barang dibaca dari file "Barang.txt".
+     */
     public void tampilBarang() {
         this.bacaDataBarang();
         this.listBarang.forEach((barang) -> {
@@ -73,6 +101,10 @@ public class Keranjang {
         this.listBarang.clear();
     }
 
+    /**
+     * Menampilkan daftar barang yang ada dalam keranjang belanja.
+     * Daftar barang dibaca dari file "Keranjang.txt".
+     */
     public void lihatKeranjang() {
         this.bacaDataKeranjang();
         this.listKeranjang.forEach((barang) -> {
@@ -85,6 +117,11 @@ public class Keranjang {
         this.listKeranjang.clear();
     }
 
+    /**
+     * Menambahkan barang ke dalam keranjang belanja.
+     * Pengguna diminta untuk memasukkan nama barang yang ingin ditambahkan ke keranjang.
+     * Jika barang ditemukan, informasi barang ditampilkan dan barang ditambahkan ke keranjang.
+     */
     public void tambahBarangKeKeranjang() {
         boolean cek = false;
         this.bacaDataBarang();
@@ -117,6 +154,11 @@ public class Keranjang {
         }
     }
 
+    /**
+     * Menghapus barang dari keranjang belanja berdasarkan nama barang.
+     * Pengguna diminta untuk memasukkan nama barang yang ingin dihapus dari keranjang.
+     * Jika barang ditemukan, barang dihapus dari keranjang.
+     */
     public void hapusBarangDiKeranjang() {
         boolean cek = false;
         this.bacaDataKeranjang();
