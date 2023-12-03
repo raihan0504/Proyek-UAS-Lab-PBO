@@ -6,5 +6,9 @@
  */
 public abstract class MetodeBayar {
 
+    /**
+     * Metode abstrak yang harus diimplementasikan oleh setiap jenis metode pembayaran.
+     * Metode ini akan digunakan untuk melakukan proses pembayaran sesuai dengan aturan yang berlaku.
+     */
     public abstract void bayar();
 }
