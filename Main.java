@@ -1,8 +1,5 @@
 import java.util.Scanner;
 
-/**
- * Kelas Main adalah kelas utama yang berisi metode main untuk menjalankan program.
- */
 public class Main {
     /**
      * Metode utama program yang akan dieksekusi saat program dijalankan.
