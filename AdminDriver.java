@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Kelas AdminDriver merupakan kelas yang menangani interaksi dari seorang administrator
+ * dalam sistem. Kelas ini menyediakan berbagai fungsi seperti menambah, menghapus,
+ * dan mengedit barang, menyetujui transaksi, serta menangani login customer.
+ */
 public class AdminDriver extends Driver {
     private Admin akun;
     private ListBarang listBarang;
@@ -15,12 +20,12 @@ public class AdminDriver extends Driver {
     private boolean approved;
     private Customer customer;
 
-    public AdminDriver(Admin akun) {
+    public AdminDriver(Admin akun) { //@param akun Objek Admin yang akan digunakan.
         this.akun = akun;
         this.listBarang = new ListBarang();
     }
 
-    public void Menu() {
+    public void Menu() { //Metode untuk menampilkan menu admin dan menangani input dari administrator.
         Scanner scan = new Scanner(System.in);
         int input = 0;
 
@@ -104,6 +109,10 @@ public class AdminDriver extends Driver {
         return totalAmount;
     }
 
+    /**
+     * Metode untuk menyetujui transaksi dari file dan menghapusnya dari daftar transaksi
+     * yang menunggu persetujuan.
+     */
     public void approveTransactionsFromFile() {
         List<String> approvalStatusList = loadPendingApprovalTransactions();
     
@@ -131,7 +140,7 @@ public class AdminDriver extends Driver {
     
 
 
-    private void approveSelectedTransaction(List<String> pendingApprovalList) {
+    private void approveSelectedTransaction(List<String> pendingApprovalList) { //@param pendingApprovalList Daftar transaksi yang menunggu persetujuan.
         Scanner scanner = new Scanner(System.in);
         
         System.out.print("Enter the Transaction ID to approve (or 'exit' to go back): ");
@@ -214,7 +223,7 @@ public class AdminDriver extends Driver {
     }
     
 
-    private void saveApprovalStatus(String selectedTransaction) {
+    private void saveApprovalStatus(String selectedTransaction) { //@param selectedTransaction String yang berisi informasi transaksi yang dipilih.
         // Memisahkan TransactionID dan Approved dari string
         String[] parts = selectedTransaction.split(",");
         String transactionId = parts[0];
