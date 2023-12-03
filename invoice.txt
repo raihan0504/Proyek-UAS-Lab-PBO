@@ -1,0 +1,12 @@
+===== Invoice =====
+Transaction ID: TRX1701627474991
+Date: DD-MM-YYYY
+Approved: No
+===== Items =====
+Kode Barang: 002
+Nama Barang: odol
+Harga: 9000
+Jumlah: 2
+------------------------
+Total Harga: 18000
+===================

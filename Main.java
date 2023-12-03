@@ -1,11 +1,6 @@
 import java.util.Scanner;
 
 public class Main {
-    /**
-     * Metode utama program yang akan dieksekusi saat program dijalankan.
-     *
-     * @param args Argumen yang dapat diterima dari baris perintah (command-line arguments).
-     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -20,7 +15,7 @@ public class Main {
         // Membuat objek CustomerDriver dan AdminDriver
         CustomerDriver customerDriver = new CustomerDriver(customer);
         AdminDriver adminDriver = new AdminDriver(admin);
-
+        
         // Menampilkan menu sesuai peran pengguna
         System.out.print("Masukkan peran Anda (customer/admin): ");
         String peran = scanner.next();
@@ -41,22 +36,14 @@ public class Main {
         } else {
             System.out.println("Peran tidak valid.");
         }
+
+        
     }
 
-    /**
-     * Menampilkan menu untuk pengguna dengan peran pelanggan (customer).
-     *
-     * @param customerDriver Objek CustomerDriver yang akan menangani operasi pelanggan.
-     */
     private static void customerMenu(CustomerDriver customerDriver) {
         customerDriver.Menu();
     }
 
-    /**
-     * Menampilkan menu untuk pengguna dengan peran admin.
-     *
-     * @param adminDriver Objek AdminDriver yang akan menangani operasi admin.
-     */
     private static void adminMenu(AdminDriver adminDriver) {
         adminDriver.Menu();
     }

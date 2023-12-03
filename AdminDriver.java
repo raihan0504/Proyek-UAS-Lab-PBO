@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AdminDriver extends Driver {
-
     private Admin akun;
     private ListBarang listBarang;
     private ArrayList<Transaksi> listTransaksi;
@@ -15,21 +14,12 @@ public class AdminDriver extends Driver {
     private boolean approved;
     private Customer customer;
 
-    /**
-     * Konstruktor kelas AdminDriver. Menginisialisasi objek Admin dan objek
-     * ListBarang.
-     *
-     * @param akun Objek Admin yang akan digunakan dalam kelas.
-     */
     public AdminDriver(Admin akun) {
         this.akun = akun;
         this.listBarang = new ListBarang();
         this.transaksi = new Transaksi(customer, listTransaksi);
     }
 
-    /**
-     * Metode untuk menampilkan menu operasi administrator.
-     */
     public void Menu() {
         Scanner scan = new Scanner(System.in);
         int input = 0;
@@ -91,4 +81,5 @@ public class AdminDriver extends Driver {
         scan.close();
     }
 
+   
 }
