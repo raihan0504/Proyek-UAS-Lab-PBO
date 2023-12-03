@@ -1,19 +1,28 @@
 import java.util.Scanner;
 
+/**
+ * Kelas CustomerDriver merepresentasikan pengemudi untuk fungsionalitas pelanggan dalam sistem belanja online.
+ * Ini memungkinkan pelanggan untuk melihat produk, menambahkan barang ke keranjang, melakukan checkout, dan mengakses riwayat transaksi.
+ * Selain itu, menyediakan opsi untuk masuk sebagai admin untuk tugas administratif.
+ * Kelas ini mengambil turunan dari kelas Driver.
+ */
 public class CustomerDriver extends Driver {
     private Customer akun;
     private Admin admin;
     private Transaksi transaksi;
     private ListBarang barang;
 
-    public CustomerDriver(Customer akun) {
+    public CustomerDriver(Customer akun) { //@param akun Akun pelanggan yang terkait dengan pengemudi ini
         this.akun = akun;
         this.transaksi = new Transaksi(akun, null);
         this.barang = new ListBarang();
     }
 
-    // Hapus konstruktor kedua karena tidak diperlukan
-
+    /**
+     * Menampilkan menu utama untuk pelanggan dengan berbagai opsi seperti melihat produk,
+     * menambahkan barang ke keranjang, melakukan checkout, melihat riwayat transaksi,
+     * masuk sebagai admin, dan keluar.
+     */
     public void Menu() {
         Scanner scan = new Scanner(System.in);
         int input;
