@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -5,8 +6,9 @@ import java.util.Scanner;
 public class ListBarang {
     private List<Barang> daftarBarang;
 
-    public ListBarang(){
-
+    public ListBarang() {
+        this.daftarBarang = new ArrayList<>();
+        this.daftarBarang = Barang.bacaDariFile("Barang.txt");
     }
 
     public ListBarang(List<Barang> daftarBarang) {
@@ -17,7 +19,6 @@ public class ListBarang {
         return daftarBarang;
     }
 
-
     public void tambahBarang() {
         Scanner scan = new Scanner(System.in);
 
@@ -27,15 +28,22 @@ public class ListBarang {
         String nama = scan.nextLine();
         System.out.print("Masukkan harga barang: ");
         int harga = scan.nextInt();
+        scan.nextLine(); // Consume the newline character
         System.out.print("Masukkan stok barang: ");
         int stok = scan.nextInt();
+        scan.nextLine(); // Consume the newline character
+
         // Buat objek Barang baru
         Barang barangBaru = new Barang(kode, nama, harga, stok);
         // Tambahkan objek Barang baru ke dalam daftarBarang
         daftarBarang.add(barangBaru);
 
         System.out.println("Barang berhasil ditambahkan!");
+
+        // Save the changes to the file
+        simpanKeFile("Barang.txt");
     }
+
     // Metode untuk menyimpan perubahan ke dalam file
     public void simpanKeFile(String namaFile) {
         Barang.simpanKeFile(daftarBarang, namaFile);
@@ -54,6 +62,7 @@ public class ListBarang {
             if (barang.getKodeBarang().equals(kode)) {
                 iterator.remove();
                 System.out.println("Barang berhasil dihapus!");
+                simpanKeFile("Barang.txt");
                 return;
             }
         }
@@ -67,9 +76,7 @@ public class ListBarang {
         System.out.print("Masukkan kode barang yang akan diedit: ");
         String kode = scan.nextLine();
 
-        Iterator<Barang> iterator = daftarBarang.iterator();
-        while (iterator.hasNext()) {
-            Barang barang = iterator.next();
+        for (Barang barang : daftarBarang) {
             if (barang.getKodeBarang().equals(kode)) {
                 System.out.println("Data barang yang akan diubah:");
                 System.out.println("Nama Barang: " + barang.getNamaBarang());
@@ -79,16 +86,16 @@ public class ListBarang {
                 System.out.print("Masukkan nama barang baru: ");
                 String namaBaru = scan.nextLine();
                 System.out.print("Masukkan harga barang baru: ");
-                int hargaBaru = scan.nextInt();
+                int hargaBaru = Integer.parseInt(scan.nextLine());
                 System.out.print("Masukkan stok barang baru: ");
-                int stokBaru = scan.nextInt();
+                int stokBaru = Integer.parseInt(scan.nextLine());
 
-                // Update data barang
                 barang.setNamaBarang(namaBaru);
                 barang.setHargaBarang(hargaBaru);
                 barang.setStokBarang(stokBaru);
 
                 System.out.println("Barang berhasil diubah!");
+                simpanKeFile("Barang.txt");
                 return;
             }
         }
@@ -108,5 +115,14 @@ public class ListBarang {
                         ", Stok: " + barang.getStokBarang());
             }
         }
-    }    
+    }
+
+    public Barang cariBarang(String kodeBarang) {
+        for (Barang barang : daftarBarang) {
+            if (barang.getKodeBarang().equals(kodeBarang)) {
+                return barang;
+            }
+        }
+        return null;
+    }
 }
