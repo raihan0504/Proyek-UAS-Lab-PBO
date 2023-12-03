@@ -1,10 +1,14 @@
 import java.util.ArrayList;
 
+/**
+ * Kelas Invoice merepresentasikan faktur pembelian yang terkait dengan suatu transaksi.
+ * Faktur ini mencakup informasi tentang transaksi, metode pembayaran, pelanggan, dan daftar barang yang dibeli.
+ */
 class Invoice {
     private Transaksi transaksi;
-    private MetodeBayar metodeBayar; // Use the abstract class type
+    private MetodeBayar metodeBayar; //Metode pembayaran yang digunakan untuk transaksi ini
     private Customer customer;
-    private ArrayList<Barang> barang;
+    private ArrayList<Barang> barang; //Daftar barang yang terdapat dalam transaksi ini.
 
     // Getter and Setter methods
 
