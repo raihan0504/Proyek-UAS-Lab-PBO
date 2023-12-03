@@ -1,45 +1,50 @@
 import java.util.Scanner;
 
-public class Main{
-    private Akun akun;
-    private Driver driverAkun;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    public void Login(){
-        Scanner scan = new Scanner(System.in);
-        Admin admin = new Admin();
+        // Membuat objek Customer
         Customer customer = new Customer();
-        int input;
+        customer.setId("customer1"); // Atur ID pelanggan jika diperlukan
 
-        do {
-            System.out.println("\n1. Login");
-            System.out.println("2. Exit");
-            System.out.print("Masukkan pilihan: ");
-            input = scan.nextInt();
+        // Membuat objek Admin
+        Admin admin = new Admin();
+        admin.setId("admin1"); // Atur ID admin jika diperlukan
 
-            switch (input) {
-                case 1:
-                    System.out.println("Masukkan ID: ");
-                    String id = scan.next();
-                    System.out.println("Masukkan Password: ");
-                    String password = scan.next();
-
-                    if (id.equals(admin.getId()) && password.equals(admin.getPassword())){
-                        
-                    }
-                    else if(id.equals(customer.getId()) && password.equals(customer.getPassword())){
-
-                    }
-                    
-                    break;
-                case 2:
-                System.out.println("Terima kasih telah menggunakan program kami");
-                break;
-                default:
-                    break;
-            }
-        }while(input>0 && input < 2);
-    }
-    public static void main(String[] args){
+        // Membuat objek CustomerDriver dan AdminDriver
+        CustomerDriver customerDriver = new CustomerDriver(customer);
+        AdminDriver adminDriver = new AdminDriver(admin);
         
+        // Menampilkan menu sesuai peran pengguna
+        System.out.print("Masukkan peran Anda (customer/admin): ");
+        String peran = scanner.next();
+
+        if (peran.equalsIgnoreCase("customer")) {
+            customerMenu(customerDriver);
+        } else if (peran.equalsIgnoreCase("admin")) {
+            // Memeriksa login admin sebelum memasuki menu admin
+            if (!AuthManager.isAdminLoggedIn()) {
+                AuthManager.loginAdmin();
+            }
+
+            if (AuthManager.isAdminLoggedIn()) {
+                adminMenu(adminDriver);
+            } else {
+                System.out.println("Login admin gagal. Silakan coba lagi.");
+            }
+        } else {
+            System.out.println("Peran tidak valid.");
+        }
+
+        
+    }
+
+    private static void customerMenu(CustomerDriver customerDriver) {
+        customerDriver.Menu();
+    }
+
+    private static void adminMenu(AdminDriver adminDriver) {
+        adminDriver.Menu();
     }
 }
