@@ -3,22 +3,33 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+**
+ * Kelas ListBarang menyediakan fungsionalitas untuk mengelola daftar barang, termasuk menambah, menghapus,
+ * dan mengedit barang. Data barang disimpan dalam file "Barang.txt".
+ * Kelas ini juga dapat digunakan untuk mencari barang berdasarkan kode.
+ * Daftar barang diinisialisasi dari file saat objek ListBarang dibuat.
+ */
 public class ListBarang {
-    private List<Barang> daftarBarang;
+    private List<Barang> daftarBarang; //Daftar barang yang dikelola oleh objek ListBarang.
 
     public ListBarang() {
         this.daftarBarang = new ArrayList<>();
         this.daftarBarang = Barang.bacaDariFile("Barang.txt");
     }
 
-    public ListBarang(List<Barang> daftarBarang) {
+    public ListBarang(List<Barang> daftarBarang) { //@param daftarBarang Daftar barang yang akan diatur.
         this.daftarBarang = daftarBarang;
     }
 
     public List<Barang> getDaftarBarang() {
-        return daftarBarang;
+        return daftarBarang; //@return Daftar barang.
     }
 
+    /**
+     * Menambahkan barang baru ke daftar barang.
+     * Pengguna diminta untuk memasukkan informasi barang seperti kode, nama, harga, dan stok.
+     * Data barang kemudian ditambahkan ke daftarBarang dan disimpan ke file "Barang.txt".
+     */
     public void tambahBarang() {
         Scanner scan = new Scanner(System.in);
 
@@ -45,11 +56,16 @@ public class ListBarang {
     }
 
     // Metode untuk menyimpan perubahan ke dalam file
-    public void simpanKeFile(String namaFile) {
+    public void simpanKeFile(String namaFile) { //@param namaFile Nama file tempat data barang akan disimpan.
         Barang.simpanKeFile(daftarBarang, namaFile);
         System.out.println("Daftar barang berhasil disimpan ke file: " + namaFile);
     }
 
+    /**
+     * Menghapus barang dari daftar berdasarkan kode barang.
+     * Pengguna diminta untuk memasukkan kode barang yang akan dihapus.
+     * Jika barang ditemukan, data barang dihapus dari daftarBarang dan perubahan disimpan ke file "Barang.txt".
+     */
     public void hapusBarang() {
         Scanner scan = new Scanner(System.in);
 
@@ -70,6 +86,12 @@ public class ListBarang {
         System.out.println("Barang dengan kode " + kode + " tidak ditemukan.");
     }
 
+    /**
+     * Mengedit barang dalam daftar berdasarkan kode barang.
+     * Pengguna diminta untuk memasukkan kode barang yang akan diedit.
+     * Jika barang ditemukan, pengguna dapat mengubah informasi seperti nama, harga, dan stok.
+     * Perubahan data barang disimpan ke file "Barang.txt".
+     */
     public void editBarang() {
         Scanner scan = new Scanner(System.in);
 
@@ -103,6 +125,11 @@ public class ListBarang {
         System.out.println("Barang dengan kode " + kode + " tidak ditemukan.");
     }
 
+    /**
+     * Menampilkan daftar barang yang ada.
+     * Jika daftarBarang kosong, pesan "Daftar Barang kosong" ditampilkan.
+     * Jika tidak, informasi setiap barang ditampilkan, termasuk kode, nama, harga, dan stok.
+     */
     public void tampilBarang() {
         if (daftarBarang.isEmpty()) {
             System.out.println("Daftar Barang kosong.");
@@ -117,6 +144,12 @@ public class ListBarang {
         }
     }
 
+    /**
+     * Mencari barang dalam daftar berdasarkan kode barang.
+     *
+     * @param kodeBarang Kode barang yang dicari.
+     * @return Objek Barang jika ditemukan, atau null jika tidak ditemukan.
+     */
     public Barang cariBarang(String kodeBarang) {
         for (Barang barang : daftarBarang) {
             if (barang.getKodeBarang().equals(kodeBarang)) {
