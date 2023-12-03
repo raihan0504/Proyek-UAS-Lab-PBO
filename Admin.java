@@ -2,8 +2,8 @@ public class Admin extends Akun {
     private String password;
     
     public Admin(){
-       super("Admin");
-       this.password = "admin";
+       super("admin");
+       this.password = "admin123";
     }
 
     public Admin(String id,String password){
