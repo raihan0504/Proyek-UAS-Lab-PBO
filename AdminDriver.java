@@ -6,12 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Kelas AdminDriver merupakan kelas yang mengontrol akses dan interaksi
- * administrator dalam sistem. Kelas ini menyediakan menu berbagai operasi yang
- * dapat dilakukan oleh administrator, seperti menambah, menghapus, dan
- * mengedit barang, menampilkan daftar barang, dan menyetujui transaksi.
- */
 public class AdminDriver extends Driver {
 
     private Admin akun;
