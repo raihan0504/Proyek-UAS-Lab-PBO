@@ -1,5 +1,5 @@
 class Akun {
-    private String id;
+    protected String id;
 
     public Akun(){
 
