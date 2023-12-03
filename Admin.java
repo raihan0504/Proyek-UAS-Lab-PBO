@@ -1,8 +1,3 @@
-/**
- * Kelas Admin merupakan turunan dari kelas Akun yang merepresentasikan akun
- * administrator dalam sistem. Kelas ini memiliki akses ke informasi identitas
- * dan kata sandi akun administrator.
- */
 public class Admin extends Akun {
 
     /**
