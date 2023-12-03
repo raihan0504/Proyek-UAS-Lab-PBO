@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+/**
+ * Kelas AuthManager menyediakan fungsi untuk mengelola proses otentikasi dan otorisasi
+ * admin dalam sistem.
+ */
 public class AuthManager {
     private static boolean adminLoggedIn = false;
 
@@ -28,10 +32,16 @@ public class AuthManager {
 
     // Metode untuk memeriksa apakah admin sudah login
     public static boolean isAdminLoggedIn() {
-        return adminLoggedIn;
+        return adminLoggedIn; //@return true jika admin sudah login, false jika tidak.
     }
 
-    // Logika otentikasi admin (contoh sederhana, gantilah dengan logika yang sesuai)
+    /**
+     * Logika otentikasi admin (contoh sederhana, gantilah dengan logika yang sesuai).
+     *
+     * @param username Username yang dimasukkan oleh pengguna.
+     * @param password Password yang dimasukkan oleh pengguna.
+     * @return true jika otentikasi sukses, false jika gagal.
+     */
     private static boolean isValidAdmin(String username, String password) {
         return "admin".equals(username) && "admin123".equals(password);
     }
