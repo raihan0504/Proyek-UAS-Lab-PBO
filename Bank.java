@@ -6,6 +6,12 @@ public class Bank extends MetodeBayar{
     private String accountNumber;
     Scanner scan = new Scanner(System.in);
 
+     /**
+     * Konstruktor kelas Bank dengan parameter nama bank dan nomor rekening.
+     *
+     * @param bankName       Nama bank untuk diatur.
+     * @param accountNumber  Nomor rekening untuk diatur.
+     */
     public Bank(String bankName, String accountNumber) {
         this.bankName = bankName;
         this.accountNumber = accountNumber;
@@ -13,6 +19,11 @@ public class Bank extends MetodeBayar{
     public Bank(){
         
     }
+
+    /**
+     * Metode bayar yang diimplementasikan dari MetodeBayar.
+     * Meminta input nama bank dan nomor rekening dari pengguna, dan menampilkan informasi pembayaran.
+     */
     @Override
     public void bayar() {
         System.out.print("Masukkan Nama Bank: ");
