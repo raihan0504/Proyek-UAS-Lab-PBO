@@ -6,12 +6,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Barang {
     private String kodeBarang;
     private String namaBarang;
     private int hargaBarang;
     private int stokBarang;
 
+    /**
+     * Konstruktor kelas Barang dengan parameter.
+     *
+     * @param kodeBarang  Kode barang.
+     * @param namaBarang  Nama barang.
+     * @param hargaBarang Harga barang.
+     * @param stokBarang  Stok barang.
+     */
     public Barang(String kodeBarang, String namaBarang, int hargaBarang, int stokBarang) {
         this.kodeBarang = kodeBarang;
         this.namaBarang = namaBarang;
@@ -59,6 +68,12 @@ public class Barang {
         stokBarang -= jumlah;
     }
 
+    /**
+     * Metode untuk membaca daftar barang dari file.
+     *
+     * @param namaFile Nama file yang akan dibaca.
+     * @return Daftar barang yang berhasil dibaca dari file.
+     */
     public static List<Barang> bacaDariFile(String namaFile) {
         List<Barang> daftarBarang = new ArrayList<>();
 
@@ -95,6 +110,12 @@ public class Barang {
         return daftarBarang;
     }
 
+     /**
+     * Metode untuk menyimpan daftar barang ke dalam file.
+     *
+     * @param daftarBarang Daftar barang yang akan disimpan.
+     * @param namaFile    Nama file tempat penyimpanan.
+     */
     public static void simpanKeFile(List<Barang> daftarBarang, String namaFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaFile))) {
             for (Barang barang : daftarBarang) {
