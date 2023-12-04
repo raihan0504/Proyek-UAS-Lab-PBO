@@ -40,10 +40,20 @@ public class Main {
         
     }
 
+    /**
+     * Menampilkan menu untuk pengguna dengan peran pelanggan (customer).
+     *
+     * @param customerDriver Objek CustomerDriver yang akan menangani operasi pelanggan.
+     */
     private static void customerMenu(CustomerDriver customerDriver) {
         customerDriver.Menu();
     }
 
+    /**
+     * Menampilkan menu untuk pengguna dengan peran admin.
+     *
+     * @param adminDriver Objek AdminDriver yang akan menangani operasi admin.
+     */
     private static void adminMenu(AdminDriver adminDriver) {
         adminDriver.Menu();
     }
