@@ -28,7 +28,6 @@ public class Barang {
         this.stokBarang = stokBarang;
     }
 
-    // Tambahkan konstruktor kosong jika diperlukan
     public Barang() {
     }
 
