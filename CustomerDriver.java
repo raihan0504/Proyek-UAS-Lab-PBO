@@ -6,14 +6,21 @@ public class CustomerDriver extends Driver {
     private Transaksi transaksi;
     private ListBarang barang;
 
+    /**
+     * Konstruktor untuk CustomerDriver.
+     * Menginisialisasi objek Customer, Transaksi, dan ListBarang.
+     *
+     * @param akun Objek Customer yang akan digunakan dalam driver.
+     */
     public CustomerDriver(Customer akun) {
         this.akun = akun;
         this.transaksi = new Transaksi(akun, null);
         this.barang = new ListBarang();
     }
 
-    // Hapus konstruktor kedua karena tidak diperlukan
-
+     /**
+     * Metode untuk menampilkan menu aksi dan mengelola input pengguna.
+     */
     public void Menu() {
         Scanner scan = new Scanner(System.in);
         int input;
