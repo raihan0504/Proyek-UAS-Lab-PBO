@@ -40,7 +40,7 @@ public class Customer extends Akun {
         this.password = password;
     }
 
-    //**
+    /**
      * Metode untuk menambahkan transaksi ke daftar invoice selesai.
      * Setelah transaksi selesai, keranjang dikosongkan.
      *
