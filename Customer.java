@@ -5,7 +5,11 @@ public class Customer extends Akun {
     private Keranjang keranjang;
     private ArrayList<Invoice> invoiceSelesai;
 
-    // Konstruktor pertama
+    /**
+     * Konstruktor pertama untuk kelas Customer.
+     * Menginisialisasi ID dengan "user", password dengan "user123",
+     * serta membuat objek Keranjang dan ArrayList Invoice.
+     */
     public Customer() {
         super("user");
         this.password = "user123";
@@ -13,7 +17,13 @@ public class Customer extends Akun {
         this.invoiceSelesai = new ArrayList<Invoice>();
     }
 
-    // Konstruktor kedua
+    /**
+     * Konstruktor kedua untuk kelas Customer.
+     * Menginisialisasi ID dengan nilai yang diberikan,
+     * serta membuat objek Keranjang dan ArrayList Invoice.
+     *
+     * @param id ID pelanggan yang akan diatur.
+     */
     public Customer(String id) {
         super(id);
         this.keranjang = new Keranjang();
@@ -30,7 +40,12 @@ public class Customer extends Akun {
         this.password = password;
     }
 
-    // Implementasi metode tambahTransaksi
+    //**
+     * Metode untuk menambahkan transaksi ke daftar invoice selesai.
+     * Setelah transaksi selesai, keranjang dikosongkan.
+     *
+     * @param transaksi Transaksi yang akan ditambahkan ke daftar invoice.
+     */
     public void tambahTransaksi(Transaksi transaksi) {
         Invoice invoiceBaru = new Invoice();
         invoiceBaru.setTransaksi(transaksi);
