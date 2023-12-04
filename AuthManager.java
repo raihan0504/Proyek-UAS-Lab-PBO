@@ -47,7 +47,7 @@ public class AuthManager {
      * @param username Username yang dimasukkan untuk login.
      * @param password Password yang dimasukkan untuk login.
      * @return True jika otentikasi berhasil, False jika gagal.
-     */)
+     */
     private static boolean isValidAdmin(String username, String password) {
         return "admin".equals(username) && "admin123".equals(password);
     }
