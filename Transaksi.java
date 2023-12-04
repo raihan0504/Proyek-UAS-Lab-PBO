@@ -144,7 +144,11 @@ public class Transaksi {
         kurangiStokBarang(listBarang);
     }
 
-   
+    /**
+    * Mengurangi stok barang dalam daftar barang berdasarkan barang yang ada dalam transaksi.
+    *
+    * @param listBarang Objek ListBarang yang digunakan untuk mengurangi stok barang.
+    */    
     private void kurangiStokBarang(ListBarang listBarang) {
         for (Barang barangKeranjang : barang) {
             Barang barangListBarang = listBarang.cariBarang(barangKeranjang.getKodeBarang());
@@ -155,7 +159,10 @@ public class Transaksi {
             }
         }
     }
-    
+
+    /**
+     * Menyimpan detail transaksi ke dalam file "transactions_pending_approval.txt".
+     */
     private void simpanDetailTransaksi() {
         String fileName = "transactions_pending_approval.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
@@ -166,7 +173,11 @@ public class Transaksi {
         }
     }
     
-
+    /**
+     * Menghitung total harga transaksi berdasarkan daftar barang.
+     *
+     * @return Total harga transaksi.
+     */
     int hitungTotalHarga() {
         int totalHarga = 0;
         for (Barang b : barang) {
@@ -186,6 +197,9 @@ public class Transaksi {
         metodePembayaran.bayar();
     }
 
+    /**
+     * Metode untuk menyetujui transaksi.
+     */
     public void approveTransaction() {
         Scanner scanner = new Scanner(System.in);
     
@@ -226,8 +240,12 @@ public class Transaksi {
         return approved;
     }
 
-
-    void saveApprovalStatus(Customer akun2) {
+    /**
+     * Metode untuk menyimpan status persetujuan transaksi ke dalam file.
+     *
+     * @param akun2 Objek Customer yang terkait dengan transaksi.
+     */
+    public void saveApprovalStatus(Customer akun2) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions_pending_approval.txt", true))) {
             if (akun != null) {
                 // Format: CustomerID,Approved
@@ -241,6 +259,11 @@ public class Transaksi {
         }
     }
 
+    /**
+     * Metode untuk memuat status persetujuan transaksi dari file.
+     *
+     * @return Daftar status persetujuan transaksi.
+     */
     public List<String> loadApprovalStatus() {
         List<String> approvalStatusList = new ArrayList<>();
     
@@ -256,6 +279,9 @@ public class Transaksi {
         return approvalStatusList;
     }
 
+    /**
+     * Metode untuk menyetujui transaksi berdasarkan status yang dimuat dari file.
+     */
     public void approveTransactionFromFile() {
         List<String> approvalStatusList = loadApprovalStatus();
 
@@ -284,7 +310,11 @@ public class Transaksi {
         }
     }
     
-
+    /**
+     * Metode untuk menghasilkan ID transaksi berdasarkan timestamp.
+     *
+     * @return ID transaksi yang dihasilkan.
+     */
     String getTransactionID() {
         // Implementasi ini akan tergantung pada cara Anda ingin menghasilkan ID transaksi.
         // Sebagai contoh, kita bisa menggunakan timestamp.
