@@ -43,6 +43,11 @@ class Invoice {
         this.barang = barang;
     }
 
+    /**
+     * Metode untuk mencetak invoice ke file "invoice.txt".
+     *
+     * @param transaksi Objek Transaksi yang akan dicetak dalam invoice.
+     */
      public static void printInvoice(Transaksi transaksi) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("invoice.txt"))) {
             writer.println("===== Invoice =====");
