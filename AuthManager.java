@@ -3,7 +3,10 @@ import java.util.Scanner;
 public class AuthManager {
     private static boolean adminLoggedIn = false;
 
-    // Metode untuk melakukan login sebagai admin
+    /**
+     * Metode untuk melakukan login sebagai admin.
+     * Menggunakan Scanner untuk menerima input username dan password.
+     */
     public static void loginAdmin() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Username: ");
@@ -20,18 +23,31 @@ public class AuthManager {
         }
     }
 
-    // Metode untuk melakukan logout sebagai admin
+    /**
+     * Metode untuk melakukan logout sebagai admin.
+     * Mengubah status login admin menjadi false.
+     */
     public static void logoutAdmin() {
         adminLoggedIn = false;
         System.out.println("Logout berhasil dari akun admin.");
     }
 
-    // Metode untuk memeriksa apakah admin sudah login
+    /**
+     * Metode untuk memeriksa apakah admin sudah login.
+     *
+     * @return True jika admin sudah login, False jika belum.
+     */
     public static boolean isAdminLoggedIn() {
         return adminLoggedIn;
     }
 
-    // Logika otentikasi admin (contoh sederhana, gantilah dengan logika yang sesuai)
+  /**
+     * Logika otentikasi admin 
+     *
+     * @param username Username yang dimasukkan untuk login.
+     * @param password Password yang dimasukkan untuk login.
+     * @return True jika otentikasi berhasil, False jika gagal.
+     */)
     private static boolean isValidAdmin(String username, String password) {
         return "admin".equals(username) && "admin123".equals(password);
     }
